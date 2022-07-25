@@ -1,6 +1,6 @@
 import { ITeamsRepository } from "../repositories/ITeamsRepository";
 import { Team } from "../entities/Team";
-import { ICreateTeamRequestDTO } from "../dtos/TeamsDTO";
+import { ICreateTeamRequestDTO, IListTeamsRequestDTO } from "../dtos/TeamsDTO";
 
 export class TeamService {
   constructor(private teamRepository: ITeamsRepository) {}
@@ -20,5 +20,13 @@ export class TeamService {
     const team = new Team({ ...data, slug });
 
     await this.teamRepository.create(team);
+  }
+
+  async findOne(id: string) {
+    return await this.teamRepository.findOne(id);
+  }
+
+  async findAll(data: IListTeamsRequestDTO) {
+    return await this.teamRepository.findAll(data);
   }
 }
