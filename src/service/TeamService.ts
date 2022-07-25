@@ -2,15 +2,13 @@ import { ITeamsRepository } from "../repositories/ITeamsRepository";
 import { Team } from "../entities/Team";
 import { ICreateTeamRequestDTO, IListTeamsRequestDTO } from "../dtos/TeamsDTO";
 
+import { slugify } from "../utils/slugify";
+
 export class TeamService {
   constructor(private teamRepository: ITeamsRepository) {}
 
   async create(data: ICreateTeamRequestDTO) {
-    const slug = data.name
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(" ", "-")
-      .replace(/[\u0300-\u036f]/g, "");
+    const slug = slugify(data.name);
 
     const teamAlreadyExists = await this.teamRepository.findOne(slug);
 
@@ -18,7 +16,7 @@ export class TeamService {
       throw new Error("Team already exists.");
     }
 
-    const team = new Team({ ...data, slug });
+    const team = new Team(data);
 
     return await this.teamRepository.create(team);
   }
