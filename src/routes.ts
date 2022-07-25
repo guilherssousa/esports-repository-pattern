@@ -10,8 +10,14 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/teams", teamController.index);
-router.get("/teams/:id", teamController.list);
-router.post("/teams", teamController.store);
+router.get("/teams", (req, res) => {
+  return teamController.index(req, res);
+});
+router.get("/teams/:id", (req, res) => {
+  return teamController.list(req, res);
+});
+router.post("/teams", (req, res) => {
+  return teamController.store(req, res);
+});
 
 export { router };
