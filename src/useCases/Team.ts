@@ -1,8 +1,8 @@
-import { PostgresTeamsRepository } from "../repositories/implementations/PostgresTeamsRepository";
+import { InMemoryTeamsRepository } from "../repositories/implementations/InMemoryTeamsRepository";
 import { TeamService } from "../service/TeamService";
 import { TeamController } from "../controllers/TeamController";
 
-const postgresTeamsRepository = new PostgresTeamsRepository();
+const postgresTeamsRepository = new InMemoryTeamsRepository();
 
 const teamService = new TeamService(postgresTeamsRepository);
 

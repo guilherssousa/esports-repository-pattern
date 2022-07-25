@@ -9,6 +9,7 @@ export class TeamService {
     const slug = data.name
       .toLowerCase()
       .normalize("NFD")
+      .replace(" ", "-")
       .replace(/[\u0300-\u036f]/g, "");
 
     const teamAlreadyExists = await this.teamRepository.findOne(slug);
@@ -19,7 +20,7 @@ export class TeamService {
 
     const team = new Team({ ...data, slug });
 
-    await this.teamRepository.create(team);
+    return await this.teamRepository.create(team);
   }
 
   async findOne(id: string) {
